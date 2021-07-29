@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LoaderSp from '../Loader';
 import Styles from './ImageGallery.module.css';
 import ImageGalleryItem from '../ImageGalleryItem';
-import imagesApi from '../services/imagesApi';
+import imagesApi from '../../services/imagesApi';
 
 class ImageGallery extends Component {
   state = {
