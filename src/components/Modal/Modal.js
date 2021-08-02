@@ -1,54 +1,49 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import Styles from './Modal.module.css';
+import defaultImage from '../../images/defaultPhoto.jpeg';
 
 const modalRoot = document.querySelector('#modal-root');
 
-class Modal extends Component {
-  state = {
-    srcLarge: this.props.srcLarge,
-    altLarge: this.props.altLarge,
-  };
+function Modal({ srcLargePhoto, altLargePhoto, onModalClick }) {
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  });
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-    window.removeEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleKeyDown = e => {
+  const handleKeyDown = e => {
     if (e.code === 'Escape') {
-      this.props.onModalClick(null);
+      onModalClick(null);
     }
   };
 
-  handleBackdropClick = event => {
+  const handleBackdropClick = event => {
     if (event.currentTarget === event.target) {
-      this.props.onModalClick(null);
+      onModalClick(null);
     }
   };
 
-  render() {
-    const { srcLarge, altLarge } = this.state;
-
-    return createPortal(
-      <div className={Styles.Overlay} onClick={this.handleBackdropClick}>
-        <div className={Styles.Modal}>
-          <img src={srcLarge} alt={altLarge} />
-        </div>
-      </div>,
-      modalRoot,
-    );
-  }
+  return createPortal(
+    <div className={Styles.Overlay} onClick={handleBackdropClick}>
+      <div className={Styles.Modal}>
+        <img src={srcLargePhoto} alt={altLargePhoto} />
+      </div>
+    </div>,
+    modalRoot,
+  );
 }
 
+Modal.defaultProps = {
+  searchValue: '',
+  srcLarge: defaultImage,
+};
+
 Modal.propTypes = {
-  srcLarge: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  srcLarge: PropTypes.string,
+  altLarge: PropTypes.string,
   onModalClick: PropTypes.func.isRequired,
 };
 

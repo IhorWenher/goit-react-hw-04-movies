@@ -1,76 +1,67 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 import Searchbar from './components/Searchbar';
 import ImageGallery from './components/ImageGallery';
 import Modal from './components/Modal';
 import Button from './components/Button';
 import Styles from './App.module.css';
+import defaultImage from './images/defaultPhoto.jpeg';
 
-class App extends Component {
-  state = {
-    searchValue: '',
-    page: 1,
-    showModal: false,
-    url: {
-      srcLarge: '',
-      altLarge: '',
-    },
-    fotos: false,
-  };
+function App() {
+  const [searchValue, setSearchValue] = useState('');
+  const [page, setPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [srcLarge, setSrcLarge] = useState('./images/defaultPhoto.jpeg');
+  const [altLarge, setAltLarge] = useState('Default image');
+  const [fotos, setFotos] = useState(false);
 
-  toggleModal = event => {
+  const toggleModal = event => {
     if (event !== null) {
-      this.setState({
-        url: {
-          srcLarge: event.target.currentSrc,
-          altLarge: event.target.alt,
-        },
-      });
+      setSrcLarge(event.target.currentSrc);
+      setAltLarge(event.target.alt);
     }
 
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
+    setShowModal(prevState => !prevState);
   };
 
-  handleFormSubmit = searchValue => {
-    this.setState({ searchValue });
+  const loadMoreImages = () => {
+    setPage(prevPage => prevPage + 1);
   };
 
-  loadMoreImages = () => {
-    this.setState({ page: this.state.page + 1 });
-    this.setState(prevState => ({ searchValue: prevState.searchValue }));
-  };
+  return (
+    <div className={Styles.App}>
+      <Searchbar onSubmit={searchValue => setSearchValue(searchValue)} />
+      <ToastContainer />
+      <ImageGallery
+        searchValue={searchValue}
+        page={page}
+        onImageClick={toggleModal}
+        onAddFotos={() => setFotos(true)}
+      />
 
-  toggleFotos = () => {
-    this.setState({ fotos: true });
-  };
+      {fotos && <Button onLoadMoreClick={loadMoreImages} />}
 
-  render() {
-    const { searchValue, page, showModal, url, fotos } = this.state;
-
-    return (
-      <div className={Styles.App}>
-        <Searchbar onSubmit={this.handleFormSubmit} />
-        <ToastContainer />
-        <ImageGallery
-          searchValue={searchValue}
-          page={page}
-          onImageClick={this.toggleModal}
-          onAddFotos={this.toggleFotos}
+      {showModal && (
+        <Modal
+          srcLargePhoto={srcLarge}
+          altLargePhoto={altLarge}
+          onModalClick={toggleModal}
         />
-
-        {fotos && <Button onLoadMoreClick={this.loadMoreImages} />}
-
-        {showModal && (
-          <Modal
-            srcLarge={url.srcLarge}
-            altLarge={url.altLarge}
-            onModalClick={this.toggleModal}
-          />
-        )}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
+
+App.defaultProps = {
+  searchValue: '',
+  srcLarge: defaultImage,
+};
+
+App.propTypes = {
+  searchValue: PropTypes.string,
+  srcLarge: PropTypes.string,
+};
 
 export default App;
