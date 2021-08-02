@@ -16,14 +16,15 @@ function ImageGallery({ searchValue, page, onImageClick, onAddFotos }) {
   const [fotos, setFotos] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
+  const [localSearchValue, setLocalSearchValue] = useState('');
+  const [localPage, setLocalPage] = useState('');
 
   useEffect(() => {
     if (searchValue === '') {
       return;
     }
 
-    if (searchValue !== '' && page === 1) {
-      setStatus(Status.PENDING);
+    if (searchValue !== localSearchValue) {
       imagesApi
         .fetchImages(searchValue, page)
         .then(data => {
@@ -36,10 +37,12 @@ function ImageGallery({ searchValue, page, onImageClick, onAddFotos }) {
         });
 
       onAddFotos();
+      setLocalSearchValue(searchValue);
+      setLocalPage(page);
       return;
     }
 
-    if (searchValue !== '' && page > 1) {
+    if (searchValue === localSearchValue && page !== localPage) {
       setStatus(Status.PENDING);
 
       imagesApi
@@ -47,20 +50,21 @@ function ImageGallery({ searchValue, page, onImageClick, onAddFotos }) {
         .then(data => {
           setFotos(prevState => [...prevState, ...data.hits]);
           setStatus(Status.RRESOLVED);
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
+          });
         })
         .catch(error => {
           setError(error);
           setError(Status.REJECTED);
         });
 
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
-      });
-
       onAddFotos();
+      setLocalPage(page);
+      return;
     }
-  }, [searchValue, page, onAddFotos]);
+  }, [localPage, localSearchValue, onAddFotos, page, searchValue]);
 
   if (status === Status.IDLE) {
     return (
