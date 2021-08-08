@@ -1,60 +1,48 @@
-import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from 'prop-types';
-import Searchbar from './components/Searchbar';
-import ImageGallery from './components/ImageGallery';
-import Modal from './components/Modal';
-import Button from './components/Button';
+//import { useState } from 'react';
+import React from 'react';
+import { Route, NavLink, Switch } from 'react-router-dom';
+//import PropTypes from 'prop-types';
+import HomePage from './views/HomeView';
+import MoviesPage from './views/MoviesView';
+import MovieDetailsPage from './views/MovieDetailsView';
+
 import Styles from './App.module.css';
-import defaultImage from './images/defaultPhoto.jpeg';
+//import defaultImage from './images/defaultPhoto.jpeg';
 
-function App() {
-  const [searchValue, setSearchValue] = useState('');
-  const [page, setPage] = useState(1);
-  const [showModal, setShowModal] = useState(false);
-  const [srcLarge, setSrcLarge] = useState('./images/defaultPhoto.jpeg');
-  const [altLarge, setAltLarge] = useState('Default image');
-  const [fotos, setFotos] = useState(false);
+const App = () => (
+  <>
+    <ul>
+      <li>
+        <NavLink
+          exact
+          to="/"
+          className={Styles.link}
+          activeClassName={Styles.active}
+        >
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="Movies"
+          className={Styles.link}
+          activeClassName={Styles.active}
+        >
+          Movies
+        </NavLink>
+      </li>
+    </ul>
 
-  const toggleModal = event => {
-    if (event !== null) {
-      setSrcLarge(event.target.currentSrc);
-      setAltLarge(event.target.alt);
-    }
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route path="/movies" component={MoviesPage} />
+      <Route path="/movies" component={MovieDetailsPage} />
+      <Route component={HomePage} />
+    </Switch>
+  </>
+);
 
-    setShowModal(prevState => !prevState);
-  };
-
-  const loadMoreImages = () => {
-    setPage(prevPage => prevPage + 1);
-  };
-
-  return (
-    <div className={Styles.App}>
-      <Searchbar onSubmit={searchValue => setSearchValue(searchValue)} />
-      <ToastContainer />
-      <ImageGallery
-        searchValue={searchValue}
-        page={page}
-        onImageClick={toggleModal}
-        onAddFotos={() => setFotos(true)}
-      />
-
-      {fotos && <Button onLoadMoreClick={loadMoreImages} />}
-
-      {showModal && (
-        <Modal
-          srcLargePhoto={srcLarge}
-          altLargePhoto={altLarge}
-          onModalClick={toggleModal}
-        />
-      )}
-    </div>
-  );
-}
-
-App.defaultProps = {
+/* App.defaultProps = {
   searchValue: '',
   srcLarge: defaultImage,
 };
@@ -63,5 +51,5 @@ App.propTypes = {
   searchValue: PropTypes.string,
   srcLarge: PropTypes.string,
 };
-
+ */
 export default App;
