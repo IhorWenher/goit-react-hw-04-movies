@@ -1,12 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import moviesApi from '../../services/moviesApi';
 import Styles from './Searchbar.module.css';
 
 const Searchbar = ({ searchValueChange }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [beforeSearch, setBeforeSearch] = useState('');
   const [moviesBySearch, setMoviesBySearch] = useState([]);
 
   useEffect(() => {
@@ -18,16 +19,16 @@ const Searchbar = ({ searchValueChange }) => {
   }, [searchValue]);
 
   const handleNameChange = event => {
-    setBeforeSearch(event.target.value.toLowerCase());
+    setSearchValue(event.target.value.toLowerCase());
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (setBeforeSearch === '') {
+    if (searchValue.trim() === '') {
+      toast.error('Enter something!');
       return;
     }
 
-    setSearchValue(beforeSearch);
     searchValueChange(moviesBySearch);
   };
 
@@ -53,8 +54,8 @@ const Searchbar = ({ searchValueChange }) => {
   );
 };
 
-/* Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-}; */
+Searchbar.propTypes = {
+  searchValueChange: PropTypes.func.isRequired,
+};
 
 export default Searchbar;

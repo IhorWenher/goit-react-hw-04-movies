@@ -1,28 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import SearchBar from '../components/Searchbar';
+import MoviesListByTitle from '../components/MoviesListByTitle';
 
 const MoviesView = () => {
-  const [moviesBySearch, setMoviesBySearch] = useState(null);
+  const [moviesBySearch, setMoviesBySearch] = useState([]);
 
   const handleSearchValue = movies => {
     setMoviesBySearch(movies);
   };
 
-  console.log(setMoviesBySearch);
-
   return (
     <>
       <SearchBar searchValueChange={movies => handleSearchValue(movies)} />
-
-      <ul>
-        {moviesBySearch &&
-          moviesBySearch.map(({ id, title }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
-            </li>
-          ))}
-      </ul>
+      <ToastContainer />
+      <MoviesListByTitle moviesBySearch={moviesBySearch} />
     </>
   );
 };
