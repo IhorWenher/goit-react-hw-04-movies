@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import moviesApi from '../../services/moviesApi';
 import Styles from './Searchbar.module.css';
 
-const Searchbar = () => {
+const Searchbar = ({ searchValueChange }) => {
   const [searchValue, setSearchValue] = useState('');
   const [beforeSearch, setBeforeSearch] = useState('');
   const [moviesBySearch, setMoviesBySearch] = useState([]);
@@ -28,9 +28,8 @@ const Searchbar = () => {
     }
 
     setSearchValue(beforeSearch);
+    searchValueChange(moviesBySearch);
   };
-
-  console.log(moviesBySearch);
 
   return (
     <>
@@ -50,12 +49,6 @@ const Searchbar = () => {
           />
         </form>
       </header>
-
-      <ul>
-        {moviesBySearch.map(({ id, title }) => (
-          <li key={id}>{title}</li>
-        ))}
-      </ul>
     </>
   );
 };
