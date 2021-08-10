@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/ReviewsList/ReviewsList.module.css"],"names":[],"mappings":"AAAA,yBACI,aACJ,CAEA,uBACI,WACJ","file":"8.e09d3b2b.chunk.css","sourcesContent":[".list {\n    color: darkslateblue;\n}\n\n.li {\n    width: 600px;\n}"]}

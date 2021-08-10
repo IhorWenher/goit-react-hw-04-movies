@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/components/MoviesListTrending/MoviesListTrending.module.css"],"names":[],"mappings":"AAAA,gCACI,eAAgB,CAChB,gBAAiB,CACjB,SACJ,CAEA,8BACI,eACJ","file":"4.faac2272.chunk.css","sourcesContent":[".list {\n    margin-top: 20px;\n    margin-left: 70px;\n    padding: 0;\n}\n\n.li {\n    margin-top: 20px;\n}"]}
