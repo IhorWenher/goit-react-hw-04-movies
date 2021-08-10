@@ -33,24 +33,22 @@ const Searchbar = ({ searchValueChange }) => {
   };
 
   return (
-    <>
-      <header className={Styles.Searchbar}>
-        <form onSubmit={handleSubmit} className={Styles.SearchForm}>
-          <button type="submit" className={Styles.button}>
-            <span className={Styles.label}>Search</span>
-          </button>
+    <div className={Styles.Searchbar}>
+      <form onSubmit={handleSubmit} className={Styles.SearchForm}>
+        <button type="submit" className={Styles.button}>
+          <span className={Styles.label}>Search</span>
+        </button>
 
-          <input
-            className={Styles.input}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search Movie"
-            onChange={handleNameChange}
-          />
-        </form>
-      </header>
-    </>
+        <input
+          className={Styles.input}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search Movie"
+          onChange={handleNameChange}
+        />
+      </form>
+    </div>
   );
 };
 

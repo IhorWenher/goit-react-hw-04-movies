@@ -1,11 +1,12 @@
 .Searchbar {
     top: 0;
-    left: 0;
-    position: sticky;
+    position: absolute;
+    right: 200px;
     z-index: 1100;
     display: flex;
     justify-content: center;
-    align-items: center;
+    width: 600px;
+    align-items: flex-end;
     min-height: 64px;
     padding-right: 24px;
     padding-left: 24px;

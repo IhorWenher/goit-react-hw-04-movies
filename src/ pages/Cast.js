@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import moviesApi from '../services/moviesApi';
-import defaultImage from '../images/defaultPhoto.jpeg';
+import CastList from '../components/CastList';
 
 const Cast = ({ movieId }) => {
   const [cast, setCast] = useState(null);
@@ -10,26 +10,7 @@ const Cast = ({ movieId }) => {
     moviesApi.getMovies(path).then(({ cast }) => setCast(cast));
   }, [movieId]);
 
-  return (
-    <ul>
-      {cast &&
-        cast.map(({ id, name, character, profile_path }) => (
-          <li key={id}>
-            <img
-              src={
-                profile_path
-                  ? `https://image.tmdb.org/t/p/w300${profile_path}`
-                  : defaultImage
-              }
-              alt={id}
-              width="300"
-            />
-            <h3>{name}</h3>
-            <p>Character: {character}</p>
-          </li>
-        ))}
-    </ul>
-  );
+  return <CastList cast={cast} />;
 };
 
 export default Cast;

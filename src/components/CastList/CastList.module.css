@@ -1,0 +1,17 @@
+.list {
+    padding: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: -15px;
+    text-decoration: none;
+}
+
+.li {
+    color: darkblue;
+    margin: 15px;
+    list-style: none;
+}
+
+.p {
+    max-width: 300px;
+}

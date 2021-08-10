@@ -15,6 +15,7 @@ const MoviesListByTitle = ({ moviesBySearch }) => {
     </ul>
   );
 };
+
 export default MoviesListByTitle;
 
 MoviesListByTitle.defaultProps = {

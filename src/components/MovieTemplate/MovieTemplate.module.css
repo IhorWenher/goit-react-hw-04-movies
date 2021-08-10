@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    padding-left: 70px;
+    margin-top: 40px;
+}
+
+.info {
+    margin: 0;
+    margin-left: 40px;
+}
