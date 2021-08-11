@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Style from './ReviewsList.module.css';
 
 const ReviewsList = ({ reviews }) => {
-  console.log(reviews);
   return (
     <ul className={Style.list}>
       {reviews && reviews[1] ? (

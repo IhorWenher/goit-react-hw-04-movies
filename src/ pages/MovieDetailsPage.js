@@ -27,11 +27,22 @@ const MovieDetailsPage = () => {
       );
   }, [movieId]);
 
+  const array = history.location.pathname.split('/');
+  const onRewiews = array.includes('reviews');
+  const onCast = array.includes('cast');
+
   return (
     <>
       {movie !== null && (
         <>
-          <BackButton backFunction={() => history.goBack()} />
+          <BackButton
+            backFunction={() => {
+              if (onCast || onRewiews) {
+                history.goBack();
+              }
+              history.goBack();
+            }}
+          />
           <MovieTemplate movie={movie} />
         </>
       )}

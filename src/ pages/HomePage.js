@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import moviesApi from '../services/moviesApi';
 import MoviesListTrending from '../components/MoviesListTrending';
 
-const HomeView = () => {
+const HomePage = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -18,4 +18,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default HomePage;

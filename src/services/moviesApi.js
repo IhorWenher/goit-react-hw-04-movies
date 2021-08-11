@@ -7,7 +7,7 @@ async function getMovies(pathName) {
 
   return response.ok
     ? await response.json()
-    : Promise.reject(new Error('Can not find images with name'));
+    : Promise.reject(new Error('Can not find movies'));
 }
 
 async function getMoviesBySearch(query) {
@@ -16,7 +16,7 @@ async function getMoviesBySearch(query) {
 
   return response.ok
     ? await response.json()
-    : Promise.reject(new Error('Can not find images with name'));
+    : Promise.reject(new Error('Can not find movies'));
 }
 
 const moviesApi = { getMovies, getMoviesBySearch };
