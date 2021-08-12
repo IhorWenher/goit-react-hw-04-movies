@@ -7,9 +7,17 @@ import AppBar from './components/AppBar';
 //import MoviesPage from './ pages/MoviesPage';
 //import MovieDetailsPage from './ pages/MovieDetailsPage';
 
-const HomePage = lazy(() => import('./ pages/HomePage'));
-const MoviesPage = lazy(() => import('./ pages/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('./ pages/MovieDetailsPage'));
+const HomePage = lazy(() =>
+  import('./ pages/HomePage' /* webpackChunkName: "home-page" */),
+);
+const MoviesPage = lazy(() =>
+  import('./ pages/MoviesPage' /* webpackChunkName: "movies-page" */),
+);
+const MovieDetailsPage = lazy(() =>
+  import(
+    './ pages/MovieDetailsPage' /* webpackChunkName: "movie-details-page" */
+  ),
+);
 
 const App = () => (
   <Container>

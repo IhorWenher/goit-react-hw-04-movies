@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -7,11 +8,12 @@ import moviesApi from '../../services/moviesApi';
 import Styles from './Searchbar.module.css';
 
 const Searchbar = ({ searchValueChange }) => {
+  const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const [moviesBySearch, setMoviesBySearch] = useState([]);
 
   useEffect(() => {
-    if (searchValue !== '') {
+    if (searchValue !== '' && window.location.search !== searchValue) {
       moviesApi
         .getMoviesBySearch(searchValue)
         .then(({ results }) => setMoviesBySearch(results));
@@ -28,6 +30,8 @@ const Searchbar = ({ searchValueChange }) => {
       toast.error('Enter something!');
       return;
     }
+
+    history.push(`/movies?query=${searchValue}`);
 
     searchValueChange(moviesBySearch);
   };

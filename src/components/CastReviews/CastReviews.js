@@ -29,7 +29,7 @@ const CastReviews = ({ url, movieId }) => {
         </NavLink>
       </div>
 
-      <Suspense fallback={<h2>Loadinh...</h2>}>
+      <Suspense fallback={<h2>Loading...</h2>}>
         <Switch>
           <Route path={`${url}/cast`}>
             <Cast movieId={movieId} />

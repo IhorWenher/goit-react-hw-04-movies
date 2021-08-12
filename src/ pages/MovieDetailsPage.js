@@ -1,6 +1,5 @@
-import { useParams, useRouteMatch } from 'react-router-dom';
+import { useParams, useRouteMatch, useHistory } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import moviesApi from '../services/moviesApi';
 import BackButton from '../components/BackButton';
 import MovieTemplate from '../components/MovieTemplate';
@@ -27,22 +26,22 @@ const MovieDetailsPage = () => {
       );
   }, [movieId]);
 
-  const array = history.location.pathname.split('/');
-  const onRewiews = array.includes('reviews');
-  const onCast = array.includes('cast');
+  const backFunction = () => {
+    const array = history.location.pathname.split('/');
+    const onRewiews = array.includes('reviews');
+    const onCast = array.includes('cast');
+
+    if (onCast || onRewiews) {
+      history.goBack();
+    }
+    history.goBack();
+  };
 
   return (
     <>
       {movie !== null && (
         <>
-          <BackButton
-            backFunction={() => {
-              if (onCast || onRewiews) {
-                history.goBack();
-              }
-              history.goBack();
-            }}
-          />
+          <BackButton backFunction={backFunction} />
           <MovieTemplate movie={movie} />
         </>
       )}
